@@ -1,12 +1,16 @@
 package chatserver.member.service;
 
 import chatserver.member.domain.Member;
+import chatserver.member.dto.MemberListResDto;
 import chatserver.member.dto.MemberLoginReqDto;
 import chatserver.member.dto.MemberSaveReqDto;
 import chatserver.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -41,6 +45,20 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         return member;
+    }
+
+    // from 엔티티 , to 엔티티 패턴으로 변환해보기
+    public List<MemberListResDto> findAll() {
+        List<Member> members = memberRepository.findAll();
+        List<MemberListResDto> memberListResDtos = new ArrayList<>();
+        for (Member m : members) {
+            MemberListResDto memberListResDto = new MemberListResDto();
+            memberListResDto.setId(m.getId());
+            memberListResDto.setName(m.getName());
+            memberListResDto.setEmail(m.getEmail());
+            memberListResDtos.add(memberListResDto);
+        }
+        return memberListResDtos;
     }
 
 }

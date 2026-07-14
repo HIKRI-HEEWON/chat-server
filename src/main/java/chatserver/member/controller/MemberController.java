@@ -2,18 +2,17 @@ package chatserver.member.controller;
 
 import chatserver.common.auth.JwtTokenProvider;
 import chatserver.member.domain.Member;
+import chatserver.member.dto.MemberListResDto;
 import chatserver.member.dto.MemberLoginReqDto;
 import chatserver.member.dto.MemberSaveReqDto;
 import chatserver.member.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -46,5 +45,11 @@ public class MemberController {
         loginInfo.put("token", jwtToken);
         return new ResponseEntity<>(loginInfo, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<?> memberList() {
+        List<MemberListResDto> dtos = memberService.findAll();
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 }
