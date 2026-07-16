@@ -1,3 +1,4 @@
+/*
 package chatserver.chat.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -24,3 +25,4 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     }
 }
+*/
